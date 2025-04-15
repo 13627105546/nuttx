@@ -329,3 +329,14 @@ void sim_netdriver_setmtu(int devidx, int mtu)
                                                mtu + ETH_HDRLEN);
 }
 
+void sim_netdriver_loop(void)
+{
+  int devidx;
+  for (devidx = 0; devidx < CONFIG_SIM_NETDEV_NUMBER; devidx++)
+    {
+      if (sim_netdev_avail(devidx))
+        {
+          netdev_lower_rxready(IDXDEV(devidx));
+        }
+    }
+}
